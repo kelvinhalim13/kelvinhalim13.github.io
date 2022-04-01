@@ -102,7 +102,6 @@ body {
   color: hsl(23, 44%, 46%);
 }
 
-
 .newlogin h1 {
   font-family: lato;
 }
@@ -120,7 +119,7 @@ body {
 
 
 .typetext {
-  font-family: 'Anonymous Pro', monospace;
+  font-family: 'Anonymous Pro', monospace;  
   font-size: 23px;
   margin-left: auto;
   margin-right: auto;
