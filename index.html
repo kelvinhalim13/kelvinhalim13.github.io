@@ -1,32 +1,276 @@
-<!doctype html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Happy Birthday Livia Mettania Putri</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="balloon.css">
-   
-    <!-- <link href="https://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise" rel="stylesheet" type="text/css"/> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Spider Lily</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;          /* 🔹 Pastikan selebar layar */
+            height: 100vh;         /* 🔹 Pastikan setinggi layar */
+            overflow: hidden !important; /* 🔹 Hapus scroll horizontal & vertikal */
+            background-color: #000;
+            position: relative;
+        }
+
+
+        .flower-container {
+            position: fixed; /* 🔹 Selalu di bawah layar */
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            pointer-events: none; /* 🔹 Supaya klik tidak mengganggu animasi */
+        }
+
+
+        /* Efek kabut */
+        .fog {
+            position: absolute;
+            top: -30%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,150,255,0.05) 20%, transparent 80%);
+            animation: fogMove 25s linear infinite;
+            filter: blur(60px);
+            z-index: -2;
+        }
+
+        @keyframes fogMove {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(100px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Bunganya */
+        .flower-wrapper {
+            position: relative;
+            transform-origin: bottom center;
+            animation: sway 6s ease-in-out infinite;
+        }
+
+        .flower {
+            width: 400px;
+            max-width: 90vw;
+            filter: drop-shadow(0 0 15px rgba(0, 140, 255, 0.8))
+                    drop-shadow(0 0 30px rgba(0, 140, 255, 0.5));
+            animation: pulse 5s ease-in-out infinite;
+        }
+
+        /* Pulsing Glow (bunga bernafas) */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px #00c3ff); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 25px #00e0ff); }
+        }
+
+        /* Glowing Halo */
+        .glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(0, 150, 255, 0.25) 0%, transparent 70%);
+            filter: blur(35px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: glow-pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.08); }
+        }
+
+        /* Fireflies / Partikel acak */
+        .fireflies {
+            position: absolute;
+            top: 115px; /* 🔹 Lebih dekat ke atas bunga */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px; /* 🔹 Area lebih kecil */
+            height: 160px; /* 🔹 Tidak meluas terlalu jauh */
+            pointer-events: none;
+        }
+
+
+        .firefly {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #00c3ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00c3ff, 0 0 20px #00c3ff;
+            opacity: 0;
+            animation: floatFirefly 5s ease-in-out infinite;
+        }
+
+        /* Posisi + delay partikel */
+        .firefly:nth-child(1) { left: 30%; animation-delay: 0s; }
+        .firefly:nth-child(2) { left: 60%; animation-delay: 1s; width: 6px; height: 6px; }
+        .firefly:nth-child(3) { left: 45%; animation-delay: 2s; width: 10px; height: 10px; }
+        .firefly:nth-child(4) { left: 20%; animation-delay: 1.5s; }
+        .firefly:nth-child(5) { left: 75%; animation-delay: 2.5s; width: 7px; height: 7px; }
+
+        /* 🔹 Partikel sekarang bergerak lebih dekat di atas bunga */
+       
+
+        @keyframes floatFirefly {
+            0% { transform: translateY(0) scale(0.6); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translateY(-60px) scale(1); opacity: 0.85; } /* 🔹 Naik lebih tinggi */
+            100% { transform: translateY(-90px) scale(1.2); opacity: 0; } /* 🔹 Terbang lebih jauh */
+        }
+
+
+        /* Lightning kecil di ujung benang sari */
+        .sparks {
+            position: absolute;
+            bottom: 15px; /* 🔹 Lebih dekat dengan bunga */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px; /* 🔹 Area lebih kecil */
+            height: 60px; /* 🔹 Tinggi animasi dikurangi */
+            pointer-events: none;
+        }
+
+        .spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #00e5ff;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #00e5ff, 0 0 25px #00e5ff;
+            opacity: 0;
+            animation: blink 3s infinite;
+        }
+
+        .spark:nth-child(1) { left: 20%; animation-delay: 1s; }
+        .spark:nth-child(2) { left: 50%; animation-delay: 2s; }
+        .spark:nth-child(3) { left: 70%; animation-delay: 3s; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            40% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Animasi goyang */
+        @keyframes sway {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(2deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-2deg); }
+        }
+
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            .flower { width: 280px; }
+            .glow { width: 320px; height: 320px; }
+            .fireflies { width: 180px; height: 160px; }
+            .sparks { width: 120px; height: 50px; }
+        }
+
+        /* Stars Container */
+        .stars {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Star Default Style */
+        .star {
+            position: absolute;
+            background-color: #FFD700; /* 🔹 Kuning neon */
+            border-radius: 50%;
+            box-shadow: 0 0 6px #FFD700, 0 0 12px #FFD700;
+            opacity: 0;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        /* Animasi Berkedip */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+
+        .glow {
+            position: absolute;
+            bottom: -30px; /* 🔹 Glow tetap sedikit di bawah bunga */
+        }
+
+        .fireflies {
+            position: absolute;
+            bottom: 250px; /* 🔹 Fireflies terbang lebih tinggi di atas bunga */
+        }
+
+        .sparks {
+            position: absolute;
+            bottom: 180px; /* 🔹 Spark tetap di atas kelopak bunga */
+        }
+
+    </style>
 </head>
 <body>
-
-<div class="wrapper newlogin">
-
-<audio autoplay loop controls style="display: none">
-    <source src="hbd.mp3" type="audio/mp3" >
-</audio>
-    <div class="balloon"></div>
-    <div class="balloon"></div>
-    <div class="balloon"></div>
-    <div class="balloon"></div>
-    <div class="balloon"></div>
-    <div class="cake">
-        <img src="cake.png" width="237" height="320">
+    <div class="flower-container">
+        <div class="fog"></div>
+        <div class="glow"></div>
+        <div class="stars"></div>
+        <div class="flower-wrapper">
+            <img src="blue-spider-lily.png" alt="Blue Spider Lily" class="flower">
+            <!-- 🔹 Partikel Fireflies -->
+            <div class="fireflies">
+                <div class="firefly"></div>
+                <div class="firefly"></div>
+                <div class="firefly"></div>
+                <div class="firefly"></div>
+                <div class="firefly"></div>
+            </div>
+            <!-- 🔹 Spark Kecil -->
+            <div class="sparks">
+                <div class="spark"></div>
+                <div class="spark"></div>
+                <div class="spark"></div>
+            </div>
+        </div>
     </div>
-    <div id="typedtext" class="typetext"></div>
-  
-</div>
+    <script>
+        const starsContainer = document.querySelector('.stars');
+        const numStars = 60; // 🔹 Jumlah bintang
+
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Ukuran acak (1 - 3 px)
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+
+            // Posisi acak di layar
+            star.style.top = `${Math.random() * 100}vh`;
+            star.style.left = `${Math.random() * 100}vw`;
+
+            // Delay animasi acak
+            star.style.animationDelay = `${Math.random() * 3}s`;
+
+            starsContainer.appendChild(star);
+        }
+    </script>
+
 </body>
-<script src="typewritter.js"></script>
 </html>
